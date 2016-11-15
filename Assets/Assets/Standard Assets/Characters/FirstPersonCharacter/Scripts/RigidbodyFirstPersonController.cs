@@ -11,17 +11,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [Serializable]
         public class MovementSettings
         {
+            public float AimMultiplier = 0.5f;
             public float ForwardSpeed = 8.0f;   // Speed when walking forward
             public float BackwardSpeed = 4.0f;  // Speed when walking backwards
             public float StrafeSpeed = 4.0f;    // Speed when walking sideways
             public float RunMultiplier = 2.0f;   // Speed when sprinting
 	        public KeyCode RunKey = KeyCode.LeftShift;
+            public KeyCode AimKey = KeyCode.Mouse1;
             public float JumpForce = 30f;
             public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
             [HideInInspector] public float CurrentTargetSpeed = 8f;
 
 #if !MOBILE_INPUT
             private bool m_Running;
+            private bool m_Aiming;
 #endif
 
             public void UpdateDesiredTargetSpeed(Vector2 input)
@@ -53,6 +56,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
 	            {
 		            m_Running = false;
 	            }
+
+                if(Input.GetKey(AimKey))
+                {
+                    CurrentTargetSpeed *= AimMultiplier;
+                    m_Aiming = true;
+                }
+                else
+                {
+                    m_Aiming = false;
+                }
 #endif
             }
 
@@ -76,6 +89,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float shellOffset; //reduce the radius by that ratio to avoid getting stuck in wall (a value of 0.1f is nice)
         }
 
+        // Animation Settings
+        Animator animator;
+        bool anim_isJumping = false;
+        bool anim_isGrounded = false;
+        bool isAiming = false;
+        float anim_moveSpeedx = 0.0f;
+        float anim_moveSpeedz = 0.0f;
+
 
         public Camera cam;
         public MovementSettings movementSettings = new MovementSettings();
@@ -88,7 +109,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
-
 
         public Vector3 Velocity
         {
@@ -123,6 +143,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
+            animator = GetComponentInChildren<Animator>();
         }
 
 
@@ -134,8 +155,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_Jump = true;
             }
+
+            UpdateAnimations();
         }
 
+        private void UpdateAnimations()
+        {
+            //Debug.Log(anim_moveSpeed);
+            animator.SetBool("isGrounded", m_IsGrounded);
+            animator.SetBool("isJumping", anim_isJumping);
+            animator.SetFloat("jumpVel", m_RigidBody.velocity.y);
+            animator.SetFloat("moveSpeedx", anim_moveSpeedx);
+            animator.SetFloat("moveSpeedz", anim_moveSpeedz);
+        }
 
         private void FixedUpdate()
         {
@@ -168,6 +200,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
                     m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
                     m_Jumping = true;
+                    anim_isJumping = true;
+
                 }
 
                 if (!m_Jumping && Mathf.Abs(input.x) < float.Epsilon && Mathf.Abs(input.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
@@ -184,6 +218,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
             m_Jump = false;
+
+            Vector3 localVelocity = transform.InverseTransformDirection(m_RigidBody.velocity);
+            anim_moveSpeedx = localVelocity.x;
+            anim_moveSpeedz = localVelocity.z;
         }
 
 
@@ -259,6 +297,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (!m_PreviouslyGrounded && m_IsGrounded && m_Jumping)
             {
                 m_Jumping = false;
+                anim_isJumping = false;
             }
         }
     }
