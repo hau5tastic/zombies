@@ -23,13 +23,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             [HideInInspector] public float CurrentTargetSpeed = 8f;
 
 #if !MOBILE_INPUT
-            private bool m_Running;
-            private bool m_Aiming;
+            public bool m_Running;
+            public bool m_Aiming;
 #endif
 
             public void UpdateDesiredTargetSpeed(Vector2 input)
             {
-	            if (input == Vector2.zero) return;
 				if (input.x > 0 || input.x < 0)
 				{
 					//strafe
@@ -47,17 +46,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 					CurrentTargetSpeed = ForwardSpeed;
 				}
 #if !MOBILE_INPUT
-	            if (Input.GetKey(RunKey))
-	            {
-		            CurrentTargetSpeed *= RunMultiplier;
-		            m_Running = true;
-	            }
-	            else
-	            {
-		            m_Running = false;
-	            }
-
-                if(Input.GetKey(AimKey))
+                if (Input.GetKey(AimKey))
                 {
                     CurrentTargetSpeed *= AimMultiplier;
                     m_Aiming = true;
@@ -66,7 +55,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     m_Aiming = false;
                 }
+
+                if (Input.GetKey(RunKey) && !m_Aiming)
+	            {
+		            CurrentTargetSpeed *= RunMultiplier;
+		            m_Running = true;
+	            }
+	            else
+	            {
+		            m_Running = false;
+	            }
 #endif
+                if (input == Vector2.zero) return;
             }
 
 #if !MOBILE_INPUT
@@ -93,9 +93,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         Animator animator;
         bool anim_isJumping = false;
         bool anim_isGrounded = false;
-        bool isAiming = false;
         float anim_moveSpeedx = 0.0f;
         float anim_moveSpeedz = 0.0f;
+        bool anim_isStationary = false;
 
 
         public Camera cam;
@@ -161,12 +161,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void UpdateAnimations()
         {
-            //Debug.Log(anim_moveSpeed);
+            animator.SetFloat("moveSpeedx", anim_moveSpeedx);
+            animator.SetFloat("moveSpeedy", m_RigidBody.velocity.y);
+            animator.SetFloat("moveSpeedz", anim_moveSpeedz);
+
             animator.SetBool("isGrounded", m_IsGrounded);
             animator.SetBool("isJumping", anim_isJumping);
-            animator.SetFloat("jumpVel", m_RigidBody.velocity.y);
-            animator.SetFloat("moveSpeedx", anim_moveSpeedx);
-            animator.SetFloat("moveSpeedz", anim_moveSpeedz);
+            animator.SetBool("isAiming", movementSettings.m_Aiming);
+            animator.SetBool("isSprinting", movementSettings.m_Running);
+            animator.SetBool("isStationary", anim_isStationary);
         }
 
         private void FixedUpdate()
@@ -200,6 +203,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
                     m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
                     m_Jumping = true;
+                    animator.SetTrigger("startJump");
                     anim_isJumping = true;
 
                 }
@@ -218,10 +222,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
             m_Jump = false;
-
-            Vector3 localVelocity = transform.InverseTransformDirection(m_RigidBody.velocity);
-            anim_moveSpeedx = localVelocity.x;
-            anim_moveSpeedz = localVelocity.z;
         }
 
 
@@ -255,7 +255,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     x = CrossPlatformInputManager.GetAxis("Horizontal"),
                     y = CrossPlatformInputManager.GetAxis("Vertical")
                 };
-			movementSettings.UpdateDesiredTargetSpeed(input);
+
+            if (input == Vector2.zero)
+            {
+                anim_isStationary = true;
+            }
+            else
+            {
+                anim_isStationary = false;
+            }
+
+            anim_moveSpeedx = input.y;
+            anim_moveSpeedz = input.x;
+
+            movementSettings.UpdateDesiredTargetSpeed(input);
             return input;
         }
 
