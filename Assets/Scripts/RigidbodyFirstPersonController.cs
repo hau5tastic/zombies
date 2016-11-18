@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
     [RequireComponent(typeof (Rigidbody))]
     [RequireComponent(typeof (CapsuleCollider))]
-    public class RigidbodyFirstPersonController : MonoBehaviour
+    public class RigidbodyFirstPersonController : NetworkBehaviour
     {
         [Serializable]
         public class MovementSettings
@@ -165,7 +166,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             animator.SetFloat("moveSpeedy", m_RigidBody.velocity.y);
             animator.SetFloat("moveSpeedz", anim_moveSpeedz);
 
-            animator.SetBool("isGrounded", m_IsGrounded);
             animator.SetBool("isJumping", anim_isJumping);
             animator.SetBool("isAiming", movementSettings.m_Aiming);
             animator.SetBool("isSprinting", movementSettings.m_Running);

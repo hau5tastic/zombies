@@ -895,7 +895,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011051927062}
-  - 95: {fileID: 95000010728195328}
   m_Layer: 0
   m_Name: Swat
   m_TagString: Untagged
@@ -975,6 +974,10 @@ GameObject:
   - 136: {fileID: 136000011184727286}
   - 114: {fileID: 114000014147026974}
   - 114: {fileID: 114000010174257284}
+  - 114: {fileID: 114000013434361060}
+  - 114: {fileID: 114000011655470434}
+  - 95: {fileID: 95000011723116942}
+  - 114: {fileID: 114000012130577712}
   m_Layer: 0
   m_Name: LocalPlayer
   m_TagString: Untagged
@@ -2275,13 +2278,13 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012612627500}
   m_Enabled: 1
---- !u!95 &95000010728195328
+--- !u!95 &95000011723116942
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013279669614}
+  m_GameObject: {fileID: 1000013669340058}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4b8849e98397722479b6739a7360f864, type: 3}
   m_Controller: {fileID: 9100000, guid: 2f55c25e8a4a4ab419c1128e2c5f350f, type: 2}
@@ -2324,6 +2327,45 @@ MonoBehaviour:
     i15: 173
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114000011655470434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013669340058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 2
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 10
+  m_InterpolateMovement: 1
+--- !u!114 &114000012130577712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013669340058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 95000011723116942}
+  m_ParameterSendBits: 495
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
 --- !u!114 &114000012244273810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2377,6 +2419,21 @@ MonoBehaviour:
   rigidbodyFirstPersonController: {fileID: 114000014147026974}
   StrideInterval: 4
   RunningStrideLengthen: 0.722
+--- !u!114 &114000013434361060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013669340058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e541c682d68fa8b4fadae1d6b10c9341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentsToDisable:
+  - {fileID: 114000014147026974}
+  - {fileID: 20000011416107512}
+  - {fileID: 81000013290178430}
 --- !u!114 &114000014147026974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2450,7 +2507,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013669340058}
-  m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
+  m_Material: {fileID: 13400000, guid: 3aeb7dadc0c69d54d9e5777e9d5631f1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
