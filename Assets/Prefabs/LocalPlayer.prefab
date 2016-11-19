@@ -2384,7 +2384,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012612627500}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.0000000014256066, y: 0.000000029802319, z: -0.0000000034417191,
+    w: 1}
   m_LocalPosition: {x: 0, y: 0.70000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2920,8 +2921,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 20000011416107512}
   motionBob:
-    HorizontalBobRange: 0.1
-    VerticalBobRange: 0.05
+    HorizontalBobRange: 1.41
+    VerticalBobRange: 0.22
     Bobcurve:
       serializedVersion: 2
       m_Curve:
@@ -3004,6 +3005,7 @@ MonoBehaviour:
   camAimLook: {fileID: 4000013074597536}
   leftHand: {fileID: 4000013361182406}
   rightHand: {fileID: 4000011982798326}
+  spine: {fileID: 4000012367974946}
   cam: {fileID: 20000011416107512}
   movementSettings:
     AimMultiplier: 0.5

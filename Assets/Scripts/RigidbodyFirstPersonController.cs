@@ -107,8 +107,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         Transform leftHand;
         [SerializeField]
         Transform rightHand;
+        [SerializeField]
+        Transform spine;
 
         public Camera cam;
+        private HeadBob headBobScript;
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
@@ -155,12 +158,25 @@ namespace UnityStandardAssets.Characters.FirstPerson
             mouseLook.Init(transform, cam.transform);
             animator = GetComponentInChildren<Animator>();
             cam.transform.position = camNormalLook.position;
+            headBobScript = cam.GetComponent<HeadBob>();
         }
 
+        private void LateUpdate()
+        {
+            RotateView();
+        }
 
         private void Update()
         {
-            RotateView();
+            if (movementSettings.m_Running)
+            {
+                headBobScript.enabled = true;
+            }
+            else
+            {
+                headBobScript.enabled = false;
+            }
+
 
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
@@ -291,16 +307,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // get the rotation before it's changed
             float oldYRotation = transform.eulerAngles.y;
 
-
-
-
-            mouseLook.LookRotation(transform, cam.transform);
-
             if (movementSettings.m_Aiming)
             {
                 cam.transform.position = camAimLook.position;
-                cam.transform.rotation = camAimLook.rotation;
+                //cam.transform.rotation = camAimLook.rotation;
             }
+
+            mouseLook.LookRotation(transform, cam.transform);
+            spine.rotation = cam.transform.rotation;
 
             if (m_IsGrounded || advancedSettings.airControl)
             {
