@@ -7,6 +7,9 @@ public class PlayerSetup : NetworkBehaviour {
     [SerializeField]
     Behaviour[] componentsToDisable;
 
+    [SerializeField]
+    GameObject playerMesh;
+
     void Start()
     {
         if(!isLocalPlayer)
@@ -15,6 +18,10 @@ public class PlayerSetup : NetworkBehaviour {
             {
                 componentsToDisable[i].enabled = false;
             }
+        }
+        else
+        {
+            playerMesh.SetActive(false);
         }
     }
 }
