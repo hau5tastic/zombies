@@ -42,11 +42,16 @@ public class Backpack : MonoBehaviour, IInventory {
 
         // Note: Don't use discard item here instead of removing it manually; because 
         // discard could spawn an item somewhere if dropped;
-        --currentSize;
+
         if (inventory[index] == null) return;
-        inventory[index].OnUse();
-        inventory[index] = null;
-        Refresh();
+        if (inventory[index].OnUse()) {
+            // If OnUse() returns true, it means the item is used up
+            inventory[index] = null;
+            --currentSize;
+            Refresh();
+        }
+
+
     }
 
     private bool IsFull() {

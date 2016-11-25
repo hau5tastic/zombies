@@ -90,6 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quickslotPrefab: {fileID: 1000010995566686, guid: e0a2aa863e901af42a63d6bd9309f99f,
     type: 2}
+  emptySprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!222 &222000010402733522
 CanvasRenderer:
   m_ObjectHideFlags: 1

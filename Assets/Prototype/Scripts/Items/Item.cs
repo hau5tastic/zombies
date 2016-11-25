@@ -8,6 +8,8 @@ public abstract class Item : MonoBehaviour, IInventoryItem {
     [SerializeField]
     private Sprite sprite;
 
+    public bool isEquipped = false;
+
     public Sprite GetSprite() {
         return sprite;
     }
@@ -17,15 +19,19 @@ public abstract class Item : MonoBehaviour, IInventoryItem {
         gameObject.SetActive(false);
         itemPrefab = gameObject;
         this.owner = owner;
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public void OnDrop() {
         gameObject.SetActive(true);
         gameObject.transform.position = owner.transform.position + owner.transform.forward * 2.0f;
         owner = null;
+        isEquipped = false;
+        GetComponent<Rigidbody>().isKinematic = false;
+        transform.parent = null; // gun only .. should probably move to the gun class OnDrop();
     }
 
-    public abstract void OnUse();
+    public abstract bool OnUse();
 
     
 }

@@ -4,7 +4,7 @@ using System.Collections;
 // Base for a gun prefab
 
 [RequireComponent(typeof(Mesh))]
-public class Gun : MonoBehaviour, IGun {
+public class Gun : Item, IGun {
 
     private Transform selfTransform;
     public Transform barrelExit;
@@ -19,7 +19,7 @@ public class Gun : MonoBehaviour, IGun {
     private float fireDelay;
 
     [Range(0.0f, 90.0f)]
-    public float bulletDeviation; // accuracy of 0 is perfect, 90 is 180 degree coverage
+    public float bulletDeviation; // accuracy of 0 is perfect, 90 is 180 degree coverage.. i think?
 
     void Start () {
         selfTransform = transform;
@@ -47,4 +47,11 @@ public class Gun : MonoBehaviour, IGun {
     public void Reload() {
 
     }
+
+    public override bool OnUse() {
+        owner.Equip(this);
+        isEquipped = true;
+        return false;
+    }
+
 }

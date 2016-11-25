@@ -17,6 +17,10 @@ public class UIQuickslot : MonoBehaviour {
         image.sprite = sprite;
     }
 
+    public void ChangeColor(Color newColor) {
+        image.color = newColor;
+    }
+
     public void SetIndex(int index) {
         button.GetComponentInChildren<Text>().text = index.ToString();
     }

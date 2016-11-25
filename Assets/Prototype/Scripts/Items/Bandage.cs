@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class Bandage : Item {
-    public override void OnUse() {
+    public override bool OnUse() {
         owner.health += 10.0f;
+        return true;
     }
 }

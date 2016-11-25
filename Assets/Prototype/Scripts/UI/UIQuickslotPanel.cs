@@ -36,4 +36,10 @@ public class UIQuickslotPanel : MonoBehaviour {
             }
         }
     }
+
+    public void ChangeColor (Color newColor) {
+        for (int i = 0; i < numSlots; ++i) {
+            quickslots[i].ChangeColor(newColor);
+        }
+    }
 }

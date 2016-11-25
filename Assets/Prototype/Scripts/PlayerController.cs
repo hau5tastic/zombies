@@ -21,9 +21,7 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
         // attach it as a child instead
         Instantiate(Resources.Load("Prototype/PlayerCamera"), selfTransform, false);
         selfCameraTransform = GetComponentInChildren<Camera>().transform;
-        currentGun.transform.parent = selfCameraTransform;
         backpack = GetComponent<Backpack>();
-
     }
 
     protected override void Update() {
@@ -41,6 +39,12 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
         // TODO: Simplify .. currently testing tho, there might be a better way to do this
         if (Input.GetKeyDown(KeyCode.I)) {
             dropMode = !dropMode;
+            if (dropMode) {
+                FindObjectOfType<UIQuickslotPanel>().ChangeColor(Color.red);
+            } else {
+                FindObjectOfType<UIQuickslotPanel>().ChangeColor(Color.white);
+
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -108,9 +112,22 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
     void OnCollisionEnter(Collision col) {
         // TODO: use tags
         Item item = col.gameObject.GetComponent<Item>();
-        if (item != null && item.isActiveAndEnabled) {
+        if (item != null && item.isActiveAndEnabled && !item.isEquipped) {
             AddItem(item);
         }
+    }
+
+    public override void Equip(Gun gun) {
+        base.Equip(gun);
+        currentGun.transform.parent = selfCameraTransform;
+    }
+
+    public override void Unequip() {
+        base.Unequip();
+    }
+
+    public Backpack GetBackpack() {
+        return backpack;
     }
 
 }
