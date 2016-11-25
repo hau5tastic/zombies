@@ -4,33 +4,39 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(PlayerController))]
 public class Backpack : MonoBehaviour, IInventory {
+    UIQuickslot uiQuickslot;
 
     PlayerController selfCharacter;
-    List<Item> inventory;
-    public int slots;
+    public List<Item> inventory;
+    // public int slots;
     private int numItems;
 	
 	void Start () {
         selfCharacter = GetComponent<PlayerController>();
-        inventory = new List<Item>();
+        uiQuickslot = FindObjectOfType<UIQuickslot>();
+        // inventory = new List<Item>();
         numItems = 0;
-	}
+        Refresh();
+    }
 	
 	public void AddItem(Item item) {
         item.OnPickup(selfCharacter);
         inventory.Add(item);
+        numItems++;
     }
 
     public void DiscardItem(int index) {
         inventory.RemoveAt(index);
+        numItems--;
     }
 
     public void UseItem(int index) {
         inventory[index].OnUse();
         Refresh();
+        numItems--;
     }
 
-    private void Refresh() {
-        // For UI stuff
+    public void Refresh() {
+        uiQuickslot.Refresh(this);
     }
 }

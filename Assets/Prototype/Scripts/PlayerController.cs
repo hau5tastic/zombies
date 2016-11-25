@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerController : Soldier, IPlayerController, IInventory {
 
+
     Transform selfCameraTransform;
     Backpack backpack;
 
@@ -19,6 +20,8 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
         Instantiate(Resources.Load("Prototype/PlayerCamera"), selfTransform, false);
         selfCameraTransform = GetComponentInChildren<Camera>().transform;
         currentGun.transform.parent = selfCameraTransform;
+        backpack = GetComponent<Backpack>();
+
     }
 
     protected override void Update() {
@@ -32,6 +35,10 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
         HandleHorizontalMovement();
         HandleRotationalMovement();
         Fire();
+
+        if (Input.GetKeyDown(KeyCode.I)) {
+            backpack.Refresh();
+        }
     }
 
     public void HandleVerticalMovement() {
@@ -71,6 +78,5 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
     public void UseItem(int index) {
         backpack.UseItem(index);
     }
-
 
 }
