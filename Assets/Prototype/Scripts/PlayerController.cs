@@ -38,6 +38,7 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
         HandleRotationalMovement();
         Fire();
 
+        // TODO: Simplify .. currently testing tho, there might be a better way to do this
         if (Input.GetKeyDown(KeyCode.I)) {
             dropMode = !dropMode;
         }
@@ -46,10 +47,23 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
             if (dropMode) DiscardItem(0);
                 UseItem(0);
         }
-
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
             if (dropMode) DiscardItem(1);
                 UseItem(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            if (dropMode) DiscardItem(2);
+                UseItem(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            if (dropMode) DiscardItem(3);
+                UseItem(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            if (dropMode) DiscardItem(4);
+                UseItem(4);
         }
     }
 
