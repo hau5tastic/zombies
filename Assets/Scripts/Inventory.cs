@@ -12,7 +12,7 @@ public class Inventory : NetworkBehaviour {
     [SerializeField]
     GameObject AssaultRifle;
 
-    List<Weapon> weapons = new List<Weapon>();
+    // List<Weapon> weapons = new List<Weapon>();
     List<Item> items = new List<Item>();
 
     // Use this for initialization
