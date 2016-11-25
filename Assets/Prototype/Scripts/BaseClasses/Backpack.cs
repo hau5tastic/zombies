@@ -32,6 +32,7 @@ public class Backpack : MonoBehaviour, IInventory {
 
     public void DiscardItem(int index) {
         --currentSize;
+        inventory[index].OnDrop();
         inventory[index] = null;
         Refresh();
     }

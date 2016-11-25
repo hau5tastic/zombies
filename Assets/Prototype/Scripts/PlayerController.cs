@@ -7,6 +7,8 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
     Transform selfCameraTransform;
     Backpack backpack;
 
+    public bool dropMode = false;
+
 
     protected override void Awake() {
         base.Awake();
@@ -37,12 +39,17 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
         Fire();
 
         if (Input.GetKeyDown(KeyCode.I)) {
-            // For Inventory Toggle, CURRENTLY: Not in use
-            // backpack.Refresh();
+            dropMode = !dropMode;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            UseItem(0);
+            if (dropMode) DiscardItem(0);
+                UseItem(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            if (dropMode) DiscardItem(1);
+                UseItem(1);
         }
     }
 
@@ -84,9 +91,9 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
         backpack.UseItem(index);
     }
 
-    void OnTriggerEnter(Collider col) {
+    void OnCollisionEnter(Collision col) {
         // TODO: use tags
-        Item item = col.GetComponent<Item>();
+        Item item = col.gameObject.GetComponent<Item>();
         if (item != null && item.isActiveAndEnabled) {
             AddItem(item);
         }
