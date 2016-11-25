@@ -6,6 +6,7 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
     Transform selfCameraTransform;
     Backpack backpack;
 
+
     protected override void Awake() {
         base.Awake();
     }
