@@ -24,6 +24,7 @@ GameObject:
   - 23: {fileID: 23000013448268298}
   - 54: {fileID: 54000010512205110}
   - 114: {fileID: 114000011404102748}
+  - 114: {fileID: 114000012424681356}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -53,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013580409428}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalPosition: {x: 0.653, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -140,6 +141,20 @@ MonoBehaviour:
   angularSpeed: 180
   gunMountTransform: {fileID: 4000012744812840}
   currentGun: {fileID: 0}
+--- !u!114 &114000012424681356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010529227248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d551ad52828c1d49b8029bcbad39ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory:
+  - {fileID: 114000012841277066, guid: 0b4abaac160389242bd1916a45bc6352, type: 2}
+  - {fileID: 114000014249624014, guid: 427b0d8f07d0d7449a9d0d91554e4de9, type: 2}
 --- !u!136 &136000013608381794
 CapsuleCollider:
   m_ObjectHideFlags: 1

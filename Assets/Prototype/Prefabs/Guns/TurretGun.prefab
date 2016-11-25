@@ -212,10 +212,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barrelExit: {fileID: 4000011464415058}
-  bulletPrefab: {fileID: 1000010739431858, guid: 8ae6b8839e2cba345aa0cd1daa248ed7,
+  bulletPrefab: {fileID: 1000010098284308, guid: 141e04c98be09b44ea95cfc37acd470a,
     type: 2}
   maxNumMagazine: 0
   roundsPerMagazine: 0
   currentAmmoInMag: 1000
-  fireRate: 0.1
-  bulletDeviation: 3.2
+  fireRate: 0.05
+  bulletDeviation: 4.2

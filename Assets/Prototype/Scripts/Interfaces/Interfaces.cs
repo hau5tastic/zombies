@@ -16,6 +16,7 @@ public interface IPlayerController {
 public interface IInventoryItem {
     void OnPickup(PlayerController owner);
     void OnUse();
+    Sprite GetSprite();
 }
 
 public interface IInventory {

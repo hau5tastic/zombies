@@ -4,39 +4,65 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(PlayerController))]
 public class Backpack : MonoBehaviour, IInventory {
-    UIQuickslot uiQuickslot;
 
+    UIQuickslotPanel uiQuickslotPanel;
     PlayerController selfCharacter;
-    public List<Item> inventory;
-    // public int slots;
-    private int numItems;
+    public Item[] inventory;
+    public int capacity = 5;
+    private int currentSize;
 	
 	void Start () {
+        currentSize = 0;
         selfCharacter = GetComponent<PlayerController>();
-        uiQuickslot = FindObjectOfType<UIQuickslot>();
-        // inventory = new List<Item>();
-        numItems = 0;
+        uiQuickslotPanel = FindObjectOfType<UIQuickslotPanel>();
+        inventory = new Item[capacity];
+        uiQuickslotPanel.BindInventory(this);
         Refresh();
     }
 	
 	public void AddItem(Item item) {
+        if (IsFull()) return;
         item.OnPickup(selfCharacter);
-        inventory.Add(item);
-        numItems++;
+        int emptySlot = FindEmptySlot();
+        if (emptySlot != -1) 
+            inventory[emptySlot] = item;
+        ++currentSize;
+        Refresh();
     }
 
     public void DiscardItem(int index) {
-        inventory.RemoveAt(index);
-        numItems--;
+        --currentSize;
+        inventory[index] = null;
+        Refresh();
     }
 
     public void UseItem(int index) {
+
+        // Note: Don't use discard item here instead of removing it manually; because 
+        // discard could spawn an item somewhere if dropped;
+        --currentSize;
+        if (inventory[index] == null) return;
         inventory[index].OnUse();
+        inventory[index] = null;
         Refresh();
-        numItems--;
+    }
+
+    private bool IsFull() {
+        return currentSize >= capacity;
+    }
+
+    private int FindEmptySlot() {
+        for (int i = 0; i < capacity; ++i) {
+            if (inventory[i] == null) return i;
+        }
+        return -1;
+    }
+
+    public int GetCurrentSize() {
+        return currentSize;
     }
 
     public void Refresh() {
-        uiQuickslot.Refresh(this);
+        uiQuickslotPanel.Refresh();
     }
 }

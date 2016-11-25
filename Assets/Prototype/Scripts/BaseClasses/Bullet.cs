@@ -15,6 +15,6 @@ public class Bullet : MonoBehaviour {
 
     void OnCollisionEnter(Collision col) {
         Destroy(gameObject);
-        Destroy(Instantiate(deathParticle, transform.position, Quaternion.identity), 0.2f);
+        Destroy(Instantiate(deathParticle, transform.position, Quaternion.identity), 0.3f);
     }
 }

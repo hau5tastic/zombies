@@ -37,7 +37,12 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
         Fire();
 
         if (Input.GetKeyDown(KeyCode.I)) {
-            backpack.Refresh();
+            // For Inventory Toggle, CURRENTLY: Not in use
+            // backpack.Refresh();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            UseItem(0);
         }
     }
 
@@ -77,6 +82,14 @@ public class PlayerController : Soldier, IPlayerController, IInventory {
 
     public void UseItem(int index) {
         backpack.UseItem(index);
+    }
+
+    void OnTriggerEnter(Collider col) {
+        // TODO: use tags
+        Item item = col.GetComponent<Item>();
+        if (item != null && item.isActiveAndEnabled) {
+            AddItem(item);
+        }
     }
 
 }
