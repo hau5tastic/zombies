@@ -50,8 +50,10 @@ public class Backpack : MonoBehaviour, IInventory {
             --currentSize;
             Refresh();
         }
+    }
 
-
+    public Item GetItem(int index) {
+        return inventory[index];
     }
 
     private bool IsFull() {

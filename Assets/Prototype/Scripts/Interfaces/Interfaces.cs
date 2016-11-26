@@ -24,4 +24,5 @@ public interface IInventory {
     void AddItem(Item item);
     void DiscardItem(int index);
     void UseItem(int index);
+    Item GetItem(int index);
 }
