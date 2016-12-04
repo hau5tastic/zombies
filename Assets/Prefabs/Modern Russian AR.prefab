@@ -131,7 +131,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 426218}
   - 95: {fileID: 9576792}
-  - 114: {fileID: 114000012369759534}
   m_Layer: 0
   m_Name: Modern Russian AR
   m_TagString: Untagged
@@ -461,14 +460,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 153586}
   m_IsPrefabParent: 1
---- !u!114 &114000012369759534
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293c9d19866240541975ce835d3b2e7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

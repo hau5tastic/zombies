@@ -9,6 +9,8 @@ public class PlayerSetup : NetworkBehaviour {
 
     [SerializeField]
     GameObject playerMesh;
+    [SerializeField]
+    GameObject gun;
 
     void Start()
     {
@@ -21,7 +23,8 @@ public class PlayerSetup : NetworkBehaviour {
         }
         else
         {
-            playerMesh.SetActive(false);
+            //playerMesh.SetActive(false);
+            //gun.SetActive(false);
         }
     }
 }

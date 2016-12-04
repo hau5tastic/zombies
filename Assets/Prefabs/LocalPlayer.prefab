@@ -744,7 +744,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013523247554}
   m_Layer: 0
-  m_Name: Normal Look (2)
+  m_Name: RightHandPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1034,7 +1034,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013683712472}
   m_Layer: 0
-  m_Name: Normal Look (1)
+  m_Name: LeftHandPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1064,7 +1064,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013881444116}
   - 95: {fileID: 95000013168266970}
-  - 114: {fileID: 114000011643568380}
   m_Layer: 9
   m_Name: Modern Russian AR
   m_TagString: Untagged
@@ -1193,7 +1192,6 @@ GameObject:
   - 114: {fileID: 114000011655470434}
   - 95: {fileID: 95000011723116942}
   - 114: {fileID: 114000012130577712}
-  - 114: {fileID: 114000012482512002}
   m_Layer: 0
   m_Name: LocalPlayer
   m_TagString: Untagged
@@ -2493,7 +2491,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013247058332}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.039999988, y: 0.5999999, z: 0.10000004}
+  m_LocalPosition: {x: 0.04, y: 0.5999999, z: 0.663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -2858,17 +2856,6 @@ MonoBehaviour:
     i15: 173
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114000011643568380
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013262837434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293c9d19866240541975ce835d3b2e7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114000011655470434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2961,19 +2948,6 @@ MonoBehaviour:
   rigidbodyFirstPersonController: {fileID: 114000014147026974}
   StrideInterval: 4
   RunningStrideLengthen: 0.722
---- !u!114 &114000012482512002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013669340058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ffadabdbc3578544a22f26d8cf6e590, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firstPersonController: {fileID: 114000014147026974}
-  AssaultRifle: {fileID: 153586, guid: 2f98296574acdd243a88ee1c60c2023c, type: 2}
 --- !u!114 &114000013434361060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2989,7 +2963,8 @@ MonoBehaviour:
   - {fileID: 114000014147026974}
   - {fileID: 20000011416107512}
   - {fileID: 81000013290178430}
-  playerMesh: {fileID: 1000013184833886}
+  playerMesh: {fileID: 1000011193951514}
+  gun: {fileID: 1000013262837434}
 --- !u!114 &114000014147026974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3003,9 +2978,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camNormalLook: {fileID: 4000010666496912}
   camAimLook: {fileID: 4000013074597536}
+  leftHandPos: {fileID: 4000013683712472}
   leftHand: {fileID: 4000013361182406}
   rightHand: {fileID: 4000011982798326}
-  spine: {fileID: 4000012367974946}
+  head: {fileID: 4000013792297724}
   cam: {fileID: 20000011416107512}
   movementSettings:
     AimMultiplier: 0.5
@@ -3045,7 +3021,7 @@ MonoBehaviour:
     YSensitivity: 2
     clampVerticalRotation: 1
     MinimumX: -45
-    MaximumX: 90
+    MaximumX: 45
     smooth: 1
     smoothTime: 18
     lockCursor: 1

@@ -102,13 +102,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
         Transform camNormalLook;
         [SerializeField]
         Transform camAimLook;
+        [SerializeField]
+        Transform leftHandPos;
 
         [SerializeField]
         Transform leftHand;
         [SerializeField]
         Transform rightHand;
         [SerializeField]
-        Transform spine;
+        Transform head;
 
         public Camera cam;
         private HeadBob headBobScript;
@@ -295,6 +297,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             anim_moveSpeedz = input.x;
 
             movementSettings.UpdateDesiredTargetSpeed(input);
+
+            if(Input.GetKeyDown(movementSettings.AimKey))
+            {
+                animator.SetTrigger("Aim");
+                leftHand.position = leftHandPos.position;
+            }
             return input;
         }
 
@@ -314,7 +322,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             mouseLook.LookRotation(transform, cam.transform);
-            spine.rotation = cam.transform.rotation;
+            head.rotation = cam.transform.rotation;
 
             if (m_IsGrounded || advancedSettings.airControl)
             {
