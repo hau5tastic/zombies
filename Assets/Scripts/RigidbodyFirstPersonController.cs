@@ -102,8 +102,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
         Transform camNormalLook;
         [SerializeField]
         Transform camAimLook;
+        float camFOV = 60.0f;
+        float dampVelocity = 0.4f;
+
         [SerializeField]
-        Transform leftHandPos;
+        Transform GunPos;
+        [SerializeField]
+        Transform GunAimPos;
+        [SerializeField]
+        GameObject Gun;
+        Vector3 targetGunPos;
+        Vector3 currentGunVel = Vector3.one;
+        // prefabs
+        GameObject currentWeapon;
 
         [SerializeField]
         Transform leftHand;
@@ -159,8 +170,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init(transform, cam.transform);
             animator = GetComponentInChildren<Animator>();
-            cam.transform.position = camNormalLook.position;
+            targetGunPos = GunPos.position;
             headBobScript = cam.GetComponent<HeadBob>();
+            currentWeapon = Instantiate(Gun, GunPos) as GameObject;
+            currentWeapon.transform.position = GunPos.position;
         }
 
         private void LateUpdate()
@@ -170,6 +183,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Update()
         {
+            float newFOV = Mathf.SmoothDamp(cam.fieldOfView, camFOV, ref dampVelocity, 0.1f);
+            cam.fieldOfView = newFOV;            
+
             if (movementSettings.m_Running)
             {
                 headBobScript.enabled = true;
@@ -179,6 +195,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 headBobScript.enabled = false;
             }
 
+            if(movementSettings.m_Aiming)
+            { 
+                targetGunPos = GunAimPos.position;
+                camFOV = 30;
+            }
+            else
+            {
+                targetGunPos = GunPos.position;
+                camFOV = 60;
+            }
 
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
@@ -202,6 +228,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
+            currentWeapon.transform.position = Vector3.SmoothDamp(currentWeapon.transform.position, targetGunPos, ref currentGunVel, 0.1f);
+            //Vector3.Lerp(currentWeapon.transform.position, targetGunPos, 1 - Mathf.Exp(-20 * Time.deltaTime));
+            //Vector3.SmoothDamp(currentWeapon.transform.position, targetGunPos, ref currentGunVel, 0.25f);
+
             GroundCheck();
             Vector2 input = GetInput();
 
@@ -298,10 +328,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             movementSettings.UpdateDesiredTargetSpeed(input);
 
-            if(Input.GetKeyDown(movementSettings.AimKey))
+            if (Input.GetKeyDown(movementSettings.AimKey))
             {
                 animator.SetTrigger("Aim");
-                leftHand.position = leftHandPos.position;
             }
             return input;
         }
@@ -319,6 +348,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 cam.transform.position = camAimLook.position;
                 //cam.transform.rotation = camAimLook.rotation;
+            }
+            else
+            {
+                cam.transform.position = camNormalLook.position;
             }
 
             mouseLook.LookRotation(transform, cam.transform);

@@ -23,8 +23,8 @@ public class PlayerSetup : NetworkBehaviour {
         }
         else
         {
-            //playerMesh.SetActive(false);
-            //gun.SetActive(false);
+            playerMesh.SetActive(false);
+            gun.SetActive(false);
         }
     }
 }
